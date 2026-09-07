@@ -3,9 +3,9 @@ import { Nav } from "@/components/Nav";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AIKAGAN — Autonomous AI Agency Pipeline",
+  title: "AutonomaX — Your money-making copilot",
   description:
-    "AIKAGAN-web_revised: an independent, self-sufficient AI agency pipeline. Diagnose an observable pain, contract a bounded mission, compose the right capabilities, deliver and measure — with evidence at every gate.",
+    "AutonomaX is a self-sufficient autonomous AI business copilot. It finds where you lose time and money, builds a bounded fix, runs the whole factory for you, and reports back in plain language. Intelligence, control, assurance — at every step.",
   metadataBase: new URL("https://aikagan-web-revised.vercel.app"),
 };
 
@@ -17,9 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <footer className="border-t border-white/5 py-10">
           <div className="mx-auto max-w-7xl px-6 text-sm text-neutral-500">
-            <p>AIKAGAN-web_revised · an independent, self-sufficient autonomous AI agency pipeline.</p>
+            <p>AutonomaX · the autonomous business copilot. Intelligence. Control. Assurance.</p>
             <p className="mt-2 text-xs text-neutral-600">
-              This is a parallel rebuild. It is not connected to the live aikagan.com storefront.
+              An independent, self-sufficient build. Not connected to any live storefront.
             </p>
           </div>
         </footer>

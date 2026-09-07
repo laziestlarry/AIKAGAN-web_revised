@@ -3,10 +3,10 @@ import { Sparkles } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/radar", label: "Demand Radar" },
-  { href: "/genesis", label: "Pipeline" },
+  { href: "/copilot", label: "Copilot" },
+  { href: "/radar", label: "Radar" },
   { href: "/offers", label: "Offers" },
-  { href: "/dashboard", label: "Console" },
+  { href: "/earnings", label: "Earnings" },
 ];
 
 export function Nav() {
@@ -14,11 +14,11 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b border-white/5 bg-ink/85 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gold/20 text-gold">
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-500 text-ink">
             <Sparkles className="h-4 w-4" />
           </span>
           <span className="text-lg font-black tracking-tight">
-            AIKAGAN<span className="gold-grad">·Revised</span>
+            Autonoma<span className="gold-grad">X</span>
           </span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-semibold text-neutral-300 md:flex">
@@ -32,7 +32,7 @@ export function Nav() {
           href="/diagnose"
           className="rounded-xl bg-gold px-4 py-2 text-sm font-black text-black transition hover:brightness-110"
         >
-          Free Diagnosis
+          Start free
         </Link>
       </div>
     </header>

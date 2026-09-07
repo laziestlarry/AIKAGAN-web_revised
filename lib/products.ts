@@ -7,12 +7,12 @@ import type { Offer } from "./types";
 export const offers: Offer[] = [
   {
     slug: "creator-pilot",
-    name: "Creator Rescue Pilot",
+    name: "Creator Booster Pilot",
     tier: "tripwire",
     priceUsd: 149,
     priceLabel: "$149",
     description:
-      "One finished content experiment for a channel with stranded audience equity: research, concept, hook, script, packaging direction and production assets.",
+      "One finished content experiment for a channel with valuable audience equity. Research, concept, hook, script, packaging and production assets.",
     bullets: [
       "Channel & audience evidence review",
       "One recommended next-video experiment",
@@ -28,7 +28,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "conversion-sprint",
-    name: "Conversion Repair Sprint",
+    name: "Conversion Booster Sprint",
     tier: "core",
     priceUsd: 199,
     priceLabel: "$199",
@@ -106,7 +106,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "activation-sprint",
-    name: "Activation Repair Sprint",
+    name: "Activation Booster Sprint",
     tier: "core",
     priceUsd: 299,
     priceLabel: "$299",
@@ -125,7 +125,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "genesis-mission",
-    name: "Genesis Managed Mission",
+    name: "AutonomaX Managed Mission",
     tier: "recurring",
     priceUsd: 499,
     priceLabel: "From $499",

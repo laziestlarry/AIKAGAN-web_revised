@@ -24,6 +24,13 @@ body {
   color: transparent;
 }
 
+.intel-grad {
+  background: linear-gradient(135deg, #67e8f9, #34d399 55%, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .card {
   @apply rounded-3xl border border-white/10 bg-white/[0.03] p-6;
 }

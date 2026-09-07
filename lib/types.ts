@@ -14,6 +14,7 @@ export type VerticalId =
 export interface Vertical {
   id: VerticalId;
   title: string;
+  tag: string;
   audience: string;
   pain: string;
   symptom: string;
@@ -23,6 +24,7 @@ export interface Vertical {
   proof: string;
   emoji: string;
   accent: string;
+  analogy: string;
 }
 
 export interface Offer {

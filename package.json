@@ -1,8 +1,8 @@
 {
-  "name": "aikagan-web-revised",
-  "version": "1.0.0",
+  "name": "autonomax-web-revised",
+  "version": "1.1.0",
   "private": true,
-  "description": "AIKAGAN-web_revised — autonomous AI agency pipeline. Independent, self-sufficient, free-deployable restructure of the AIKAGAN value chain.",
+  "description": "AutonomaX — an autonomous business copilot. Self-sufficient, free-deployable AI agency pipeline with intelligence, control and assurance at every step.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
