@@ -3,10 +3,10 @@ import { Sparkles } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/copilot", label: "Copilot" },
-  { href: "/radar", label: "Radar" },
+  { href: "/diagnose", label: "Profile" },
+  { href: "/opportunities", label: "Opportunities" },
   { href: "/offers", label: "Offers" },
-  { href: "/earnings", label: "Earnings" },
+  { href: "/copilot", label: "How it works" },
 ];
 
 export function Nav() {

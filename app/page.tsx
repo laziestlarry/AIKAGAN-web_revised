@@ -23,13 +23,13 @@ export default function Home() {
               href="/diagnose"
               className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3.5 text-sm font-black text-black transition hover:brightness-110"
             >
-              Find your biggest leak — free <ArrowRight className="h-4 w-4" />
+              Profile me — free <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/copilot"
+              href="/opportunities"
               className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-6 py-3.5 text-sm font-bold"
             >
-              See the copilot <Bot className="h-4 w-4" />
+              Find what pays <Bot className="h-4 w-4" />
             </Link>
           </div>
         </div>

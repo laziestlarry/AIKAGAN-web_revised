@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "AutonomaX — Your money-making copilot",
   description:
     "AutonomaX is a self-sufficient autonomous AI business copilot. It finds where you lose time and money, builds a bounded fix, runs the whole factory for you, and reports back in plain language. Intelligence, control, assurance — at every step.",
-  metadataBase: new URL("https://aikagan-web-revised.vercel.app"),
+  metadataBase: new URL("https://autonomax.app"),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -17,10 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <footer className="border-t border-white/5 py-10">
           <div className="mx-auto max-w-7xl px-6 text-sm text-neutral-500">
-            <p>AutonomaX · the autonomous business copilot. Intelligence. Control. Assurance.</p>
-            <p className="mt-2 text-xs text-neutral-600">
-              An independent, self-sufficient build. Not connected to any live storefront.
-            </p>
+            <p>AutonomaX — the partner that runs the machine so you stay the captain.</p>
+            <p className="mt-2 text-xs text-neutral-600">Save time. Find what pays. Build it once, automate it after.</p>
           </div>
         </footer>
       </body>

@@ -26,11 +26,11 @@ export default function AuditPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-20">
-      <p className="chip text-emerald-300">Quality audit · 3 providers</p>
-      <h1 className="mt-5 text-4xl font-black">Intelligence. Control. Assurance.</h1>
+      <p className="chip text-emerald-300">Quality gate</p>
+      <h1 className="mt-5 text-4xl font-black">We check our work before it reaches you.</h1>
       <p className="mt-5 max-w-3xl leading-8 text-neutral-300">
-        A binding audit runs your input, plan and output through three checks in sequence. Each verifies a different
-        face of the work — intent, guardrails and evidence — before anything ships.
+        Every deliverable passes a three-part check before we submit it — intent, control and evidence. This is the
+        gate that keeps your outcome clean. It's not a ranking of you; it's how we certify our own output.
       </p>
 
       <div className="mt-10 grid gap-4 md:grid-cols-3">
