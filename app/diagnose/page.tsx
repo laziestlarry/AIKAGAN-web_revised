@@ -1,6 +1,7 @@
 import { PersonaFlow } from "@/components/PersonaFlow";
 
-export default function DiagnosePage() {
+export default async function DiagnosePage({ searchParams }: { searchParams: Promise<{ vertical?: string }> }) {
+  const { vertical } = await searchParams;
   return (
     <main className="mx-auto max-w-5xl px-6 py-20">
       <p className="chip text-emerald-300">Free profile</p>
@@ -10,7 +11,7 @@ export default function DiagnosePage() {
         and the highest-leverage moves — free, and you keep it.
       </p>
       <div className="mt-12">
-        <PersonaFlow />
+        <PersonaFlow initialVertical={vertical} />
       </div>
     </main>
   );

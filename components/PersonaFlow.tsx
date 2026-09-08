@@ -7,8 +7,8 @@ import { personaLanes, profile } from "@/lib/personas";
 import { getOffer } from "@/lib/products";
 import type { PersonaProfile } from "@/lib/personas";
 
-export function PersonaFlow() {
-  const [laneId, setLaneId] = useState<string | null>(null);
+export function PersonaFlow({ initialVertical }: { initialVertical?: string }) {
+  const [laneId, setLaneId] = useState<string | null>(initialVertical ?? null);
   const [answers, setAnswers] = useState<number[]>([]);
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);

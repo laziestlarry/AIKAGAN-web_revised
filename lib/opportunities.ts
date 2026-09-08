@@ -1,13 +1,17 @@
+import type { VerticalId } from "./types";
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Money-maker scanner — finds real, automatable, get-paid opportunities.
 // Brings them to the table, ranks them, and maps a "do once → automate after"
 // path. This is the value the customer actually gets: save the boredom of
 // repeating robotic actions and turn effort into a repeatable income stream.
+// Each opportunity routes to a lane, so "show me how" leads to a matched profile.
 // ─────────────────────────────────────────────────────────────────────────────
 export interface Opportunity {
   id: string;
   title: string;
   platform: string;
+  lane: VerticalId;
   whatYouDoOnce: string;
   automateAfter: string;
   timeToFirst: string;
@@ -22,16 +26,16 @@ export interface Opportunity {
 // Catalog of automatable income opportunities. Each is a real, doable, repeatable
 // path that can be run once and then handed to a system.
 const catalog: Omit<Opportunity, "score" | "verdict">[] = [
-  { id: "op-affiliate", title: "Product review blog with affiliate links", platform: "Blog / SEO", whatYouDoOnce: "Pick a niche, write 5 reviews, add your affiliate link.", automateAfter: "AI drafts + schedules new posts from a keyword feed.", timeToFirst: "1–3 months", capital: "$0", automation: 78, pay: "Commission per sale", tags: ["affiliate", "seo", "content"] },
-  { id: "op-pod", title: "Print-on-demand art listing", platform: "Etsy / Printbelle", whatYouDoOnce: "Create a design, set price, publish one listing.", automateAfter: "Listing engine generates title, tags, mockups and price.", timeToFirst: "1–2 weeks", capital: "$0", automation: 82, pay: "Margin per sale", tags: ["pod", "etsy", "design"] },
-  { id: "op-gig", title: "AI-assisted service gig", platform: "Fiverr", whatYouDoOnce: "Write one gig (title, packages, FAQ), set scope.", automateAfter: "Copy bot drafts gigs, audit bot checks before publish.", timeToFirst: "3–7 days", capital: "$0", automation: 64, pay: "Per order", tags: ["fiverr", "service", "gig"] },
-  { id: "op-digital", title: "Digital template / kit", platform: "Gumroad / Shopier", whatYouDoOnce: "Package one template or guide, set a price.", automateAfter: "Instant delivery via webhook, upsell path wired.", timeToFirst: "1–2 weeks", capital: "$0", automation: 74, pay: "Per download", tags: ["digital", "template", "gumroad"] },
-  { id: "op-youtube", title: "Faceless niche channel", platform: "YouTube", whatYouDoOnce: "Plan 10 videos on one topic, set a cadence.", automateAfter: "Script + voice + edit pipeline, scheduled publish.", timeToFirst: "2–6 months", capital: "$0", automation: 60, pay: "Ads / sponsors", tags: ["youtube", "content", "passive"] },
-  { id: "op-dm", title: "DM-to-checkout closer", platform: "Social DMs", whatYouDoOnce: "Reply to inbound interest and route to a checkout link.", automateAfter: "Intent classifier + checkout link generated automatically.", timeToFirst: "Days", capital: "$0", automation: 71, pay: "Per sale", tags: ["dm", "sales", "automation"] },
-  { id: "op-audit", title: "Diagnostic / audit service", platform: "Fiverr / direct", whatYouDoOnce: "Run one audit and deliver a ranked fix list.", automateAfter: "Intake → audit → delivery runs as a repeatable flow.", timeToFirst: "1 week", capital: "$0", automation: 55, pay: "Per project", tags: ["audit", "service", "diagnostic"] },
-  { id: "op-course", title: "Mini-course from existing know-how", platform: "Gumroad / Teachable", whatYouDoOnce: "Record one module, add a worksheet.", automateAfter: "Enrolment + email sequence + upsell automated.", timeToFirst: "1 month", capital: "$0", automation: 68, pay: "Per seat", tags: ["course", "education", "product"] },
-  { id: "op-newsletter", title: "Niche newsletter", platform: "Email", whatYouDoOnce: "Write 3 issues on one niche, add a signup.", automateAfter: "Draft + schedule from a curated feed.", timeToFirst: "2–4 weeks", capital: "$0", automation: 72, pay: "Sponsorships", tags: ["email", "newsletter", "recurring"] },
-  { id: "op-review", title: "Paid product review", platform: "UserTesting / sites", whatYouDoOnce: "Complete one qualifying review task.", automateAfter: "Alert + task prioritisation auto-runs.", timeToFirst: "Days", capital: "$0", automation: 62, pay: "Per task", tags: ["get-paid", "task", "micro"] },
+  { id: "op-affiliate", title: "Product review blog with affiliate links", platform: "Blog / SEO", lane: "expert-rescue", whatYouDoOnce: "Pick a niche, write 5 reviews, add your affiliate link.", automateAfter: "AI drafts + schedules new posts from a keyword feed.", timeToFirst: "1–3 months", capital: "$0", automation: 78, pay: "Commission per sale", tags: ["affiliate", "seo", "content"] },
+  { id: "op-pod", title: "Print-on-demand art listing", platform: "Etsy / Printbelle", lane: "store-rescue", whatYouDoOnce: "Create a design, set price, publish one listing.", automateAfter: "Listing engine generates title, tags, mockups and price.", timeToFirst: "1–2 weeks", capital: "$0", automation: 82, pay: "Margin per sale", tags: ["pod", "etsy", "design"] },
+  { id: "op-gig", title: "AI-assisted service gig", platform: "Fiverr", lane: "agency-rescue", whatYouDoOnce: "Write one gig (title, packages, FAQ), set scope.", automateAfter: "Copy bot drafts gigs, audit bot checks before publish.", timeToFirst: "3–7 days", capital: "$0", automation: 64, pay: "Per order", tags: ["fiverr", "service", "gig"] },
+  { id: "op-digital", title: "Digital template / kit", platform: "Gumroad / Shopier", lane: "expert-rescue", whatYouDoOnce: "Package one template or guide, set a price.", automateAfter: "Instant delivery via webhook, upsell path wired.", timeToFirst: "1–2 weeks", capital: "$0", automation: 74, pay: "Per download", tags: ["digital", "template", "gumroad"] },
+  { id: "op-youtube", title: "Faceless niche channel", platform: "YouTube", lane: "creator-rescue", whatYouDoOnce: "Plan 10 videos on one topic, set a cadence.", automateAfter: "Script + voice + edit pipeline, scheduled publish.", timeToFirst: "2–6 months", capital: "$0", automation: 60, pay: "Ads / sponsors", tags: ["youtube", "content", "passive"] },
+  { id: "op-dm", title: "DM-to-checkout closer", platform: "Social DMs", lane: "store-rescue", whatYouDoOnce: "Reply to inbound interest and route to a checkout link.", automateAfter: "Intent classifier + checkout link generated automatically.", timeToFirst: "Days", capital: "$0", automation: 71, pay: "Per sale", tags: ["dm", "sales", "automation"] },
+  { id: "op-audit", title: "Diagnostic / audit service", platform: "Fiverr / direct", lane: "agency-rescue", whatYouDoOnce: "Run one audit and deliver a ranked fix list.", automateAfter: "Intake → audit → delivery runs as a repeatable flow.", timeToFirst: "1 week", capital: "$0", automation: 55, pay: "Per project", tags: ["audit", "service", "diagnostic"] },
+  { id: "op-course", title: "Mini-course from existing know-how", platform: "Gumroad / Teachable", lane: "expert-rescue", whatYouDoOnce: "Record one module, add a worksheet.", automateAfter: "Enrolment + email sequence + upsell automated.", timeToFirst: "1 month", capital: "$0", automation: 68, pay: "Per seat", tags: ["course", "education", "product"] },
+  { id: "op-newsletter", title: "Niche newsletter", platform: "Email", lane: "creator-rescue", whatYouDoOnce: "Write 3 issues on one niche, add a signup.", automateAfter: "Draft + schedule from a curated feed.", timeToFirst: "2–4 weeks", capital: "$0", automation: 72, pay: "Sponsorships", tags: ["email", "newsletter", "recurring"] },
+  { id: "op-review", title: "Paid product review", platform: "UserTesting / sites", lane: "creator-rescue", whatYouDoOnce: "Complete one qualifying review task.", automateAfter: "Alert + task prioritisation auto-runs.", timeToFirst: "Days", capital: "$0", automation: 62, pay: "Per task", tags: ["get-paid", "task", "micro"] },
 ];
 
 export function scoreOpportunity(o: Omit<Opportunity, "score" | "verdict">): number {
