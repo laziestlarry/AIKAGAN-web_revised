@@ -8,13 +8,20 @@
 
 html,
 body {
-  background: #08080a;
-  color: #f5f5f5;
+  background: #17202a;
+  color: #f7f9f9;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: rgba(212, 175, 55, 0.35);
+  background: rgba(40, 116, 166, 0.4);
+}
+
+.steel-grad {
+  background: linear-gradient(135deg, #7fb3d5, #2874a6 45%, #1a5276);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .gold-grad {
@@ -25,7 +32,7 @@ body {
 }
 
 .intel-grad {
-  background: linear-gradient(135deg, #67e8f9, #34d399 55%, #22d3ee);
+  background: linear-gradient(135deg, #7fb3d5, #2ecc71 55%, #2874a6);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

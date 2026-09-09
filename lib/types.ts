@@ -116,3 +116,31 @@ export interface LedgerEntry {
   amount: number;
   at: number;
 }
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  passHash: string;
+  salt: string;
+  role: "user" | "commander";
+  owner: string;
+  createdAt: number;
+}
+
+export interface Approval {
+  id: string;
+  action: string;
+  detail: string;
+  kind: string;
+  status: "pending" | "approved" | "rejected";
+  requestedBy: string;
+  createdAt: number;
+  decidedAt: number | null;
+}
+
+export interface Session {
+  token: string;
+  userId: string;
+  createdAt: number;
+}

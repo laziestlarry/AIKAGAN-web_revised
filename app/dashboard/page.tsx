@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { BusinessDashboard } from "@/components/BusinessDashboard";
 
-export default function DashboardRedirect() {
-  redirect("/copilot");
+export default function DashboardPage() {
+  return <BusinessDashboard />;
 }

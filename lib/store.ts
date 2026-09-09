@@ -1,4 +1,4 @@
-import type { LedgerEntry, Mission, Order } from "./types";
+import type { Approval, LedgerEntry, Mission, Order, Session, User } from "./types";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Store — persistence abstraction. Defaults to a durable in-memory store so the
@@ -9,12 +9,18 @@ interface StoreShape {
   orders: Order[];
   missions: Mission[];
   ledger: LedgerEntry[];
+  users: User[];
+  sessions: Session[];
+  approvals: Approval[];
 }
 
 class MemoryStore implements StoreShape {
   orders: Order[] = [];
   missions: Mission[] = [];
   ledger: LedgerEntry[] = [];
+  users: User[] = [];
+  sessions: Session[] = [];
+  approvals: Approval[] = [];
 }
 
 let singleton: StoreShape | null = null;
@@ -24,7 +30,6 @@ function getStore(): StoreShape {
   const url = process.env.KV_REST_API_URL;
   const token = process.env.KV_REST_API_TOKEN;
   if (url && token) {
-    // Lightweight Upstash REST client (no SDK dependency).
     singleton = new UpstashStore(url, token);
   } else {
     singleton = new MemoryStore();
@@ -37,6 +42,9 @@ class UpstashStore implements StoreShape {
   orders: Order[] = [];
   missions: Mission[] = [];
   ledger: LedgerEntry[] = [];
+  users: User[] = [];
+  sessions: Session[] = [];
+  approvals: Approval[] = [];
   async read<T>(key: string, fallback: T): Promise<T> {
     try {
       const res = await fetch(`${this.url}/get/${key}`, { headers: { Authorization: `Bearer ${this.token}` } });
@@ -59,30 +67,37 @@ class UpstashStore implements StoreShape {
   }
 }
 
+async function readList<T>(key: string, fallback: T): Promise<T> {
+  const s = getStore();
+  return s instanceof UpstashStore ? s.read<T>(key, fallback) : (s as unknown as Record<string, T>)[key];
+}
+
+async function writeList<T>(key: string, list: T[]): Promise<void> {
+  const s = getStore();
+  if (s instanceof UpstashStore) await s.write(key, list);
+}
+
 export async function createOrder(o: Order): Promise<void> {
   const s = getStore();
-  if (s instanceof UpstashStore) {
-    const list = await s.read<Order[]>("orders", []);
-    list.unshift(o);
-    await s.write("orders", list);
-  } else {
-    s.orders.unshift(o);
-  }
+  const list = await readList<Order[]>("orders", []);
+  list.unshift(o);
+  if (s instanceof UpstashStore) await writeList("orders", list);
+  else s.orders = list;
 }
 
 export async function updateOrder(id: string, patch: Partial<Order>): Promise<void> {
   const s = getStore();
-  const list = s instanceof UpstashStore ? await s.read<Order[]>("orders", []) : s.orders;
+  const list = await readList<Order[]>("orders", []);
   const idx = list.findIndex((x) => x.id === id);
   if (idx !== -1) {
     list[idx] = { ...list[idx], ...patch };
-    if (s instanceof UpstashStore) await s.write("orders", list);
+    if (s instanceof UpstashStore) await writeList("orders", list);
+    else s.orders = list;
   }
 }
 
 export async function getOrders(): Promise<Order[]> {
-  const s = getStore();
-  return s instanceof UpstashStore ? s.read<Order[]>("orders", []) : s.orders;
+  return (await readList<Order[]>("orders", [])).slice().sort((a, b) => b.createdAt - a.createdAt);
 }
 
 export async function getOrder(id: string): Promise<Order | undefined> {
@@ -92,41 +107,92 @@ export async function getOrder(id: string): Promise<Order | undefined> {
 
 export async function appendLedger(entry: LedgerEntry): Promise<void> {
   const s = getStore();
-  if (s instanceof UpstashStore) {
-    const list = await s.read<LedgerEntry[]>("ledger", []);
-    list.unshift(entry);
-    await s.write("ledger", list);
-  } else {
-    s.ledger.unshift(entry);
-  }
+  const list = await readList<LedgerEntry[]>("ledger", []);
+  list.unshift(entry);
+  if (s instanceof UpstashStore) await writeList("ledger", list);
+  else s.ledger = list;
 }
 
 export async function getLedger(): Promise<LedgerEntry[]> {
-  const s = getStore();
-  return s instanceof UpstashStore ? s.read<LedgerEntry[]>("ledger", []) : s.ledger;
+  return readList<LedgerEntry[]>("ledger", []);
 }
 
 export async function saveMission(m: Mission): Promise<void> {
   const s = getStore();
-  if (s instanceof UpstashStore) {
-    const list = await s.read<Mission[]>("missions", []);
-    const idx = list.findIndex((x) => x.id === m.id);
-    if (idx !== -1) list[idx] = m;
-    else list.unshift(m);
-    await s.write("missions", list);
-  } else {
-    const idx = s.missions.findIndex((x) => x.id === m.id);
-    if (idx !== -1) s.missions[idx] = m;
-    else s.missions.unshift(m);
-  }
+  const list = await readList<Mission[]>("missions", []);
+  const idx = list.findIndex((x) => x.id === m.id);
+  if (idx !== -1) list[idx] = m;
+  else list.unshift(m);
+  if (s instanceof UpstashStore) await writeList("missions", list);
+  else s.missions = list;
 }
 
 export async function getMissions(): Promise<Mission[]> {
-  const s = getStore();
-  return s instanceof UpstashStore ? s.read<Mission[]>("missions", []) : s.missions;
+  return readList<Mission[]>("missions", []);
 }
 
 export async function getMission(id: string): Promise<Mission | undefined> {
   const list = await getMissions();
   return list.find((m) => m.id === id);
+}
+
+// ── Users, sessions, approvals ──────────────────────────────────────────────
+export async function saveUser(u: User): Promise<void> {
+  const s = getStore();
+  const list = await readList<User[]>("users", []);
+  const idx = list.findIndex((x) => x.id === u.id);
+  if (idx !== -1) list[idx] = u;
+  else list.unshift(u);
+  if (s instanceof UpstashStore) await writeList("users", list);
+  else s.users = list;
+}
+
+export async function getUserByEmail(email: string): Promise<User | undefined> {
+  const list = await readList<User[]>("users", []);
+  return list.find((u) => u.email.toLowerCase() === email.toLowerCase());
+}
+
+export async function getUserById(id: string): Promise<User | undefined> {
+  const list = await readList<User[]>("users", []);
+  return list.find((u) => u.id === id);
+}
+
+export async function listUsers(): Promise<User[]> {
+  return readList<User[]>("users", []);
+}
+
+export async function saveSession(s: Session): Promise<void> {
+  const store = getStore();
+  const list = await readList<Session[]>("sessions", []);
+  const idx = list.findIndex((x) => x.token === s.token);
+  if (idx !== -1) list[idx] = s;
+  else list.unshift(s);
+  if (store instanceof UpstashStore) await writeList("sessions", list);
+  else store.sessions = list;
+}
+
+export async function getSession(token: string): Promise<Session | undefined> {
+  const list = await readList<Session[]>("sessions", []);
+  return list.find((x) => x.token === token);
+}
+
+export async function deleteSession(token: string): Promise<void> {
+  const store = getStore();
+  const list = (await readList<Session[]>("sessions", [])).filter((x) => x.token !== token);
+  if (store instanceof UpstashStore) await writeList("sessions", list);
+  else store.sessions = list;
+}
+
+export async function saveApproval(a: Approval): Promise<void> {
+  const store = getStore();
+  const list = await readList<Approval[]>("approvals", []);
+  const idx = list.findIndex((x) => x.id === a.id);
+  if (idx !== -1) list[idx] = a;
+  else list.unshift(a);
+  if (store instanceof UpstashStore) await writeList("approvals", list);
+  else store.approvals = list;
+}
+
+export async function listApprovals(): Promise<Approval[]> {
+  return readList<Approval[]>("approvals", []);
 }
